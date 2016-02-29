@@ -1,4 +1,6 @@
 # Sebastián Outeiro
+
+Este repo es para subir todos los archivos de la escuelita.
 __________
 ### Backend  
 
