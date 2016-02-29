@@ -1,10 +1,15 @@
 package clientesYPaquetes;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import clientesYPaquetes.Cliente;
 import clientesYPaquetes.Paquete;
 
 public class Individuo extends Cliente {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(Individuo.class);
 
 	private Paquete paquetesReservados;
 
@@ -47,8 +52,13 @@ public class Individuo extends Cliente {
 			return;
 		}
 		// En caso de que trate de comprar un paquete con otro reservado
-		if (this.paquetesReservados != null)
-			throw new ElUsuarioDebeFinalizarLaCompraDelPaqueteReservadoException();	
+		if (this.paquetesReservados != null){
+			RuntimeException e = new ElUsuarioDebeFinalizarLaCompraDelPaqueteReservadoException();	
+			LOGGER.error("Se quizo comprar un segundo paquete teniendo uno reservado",e);
+			throw e;
+		}
+		super.comprarPaquete(unPaquete);
+		
 	}
 
 }

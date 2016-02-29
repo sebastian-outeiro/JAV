@@ -2,7 +2,12 @@ package clientesYPaquetes;
 
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class Cliente {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(Cliente.class);
 
 	protected double saldo;
 	private ArrayList<Paquete> paquetesComprados;
@@ -23,7 +28,9 @@ public abstract class Cliente {
 	public void comprarPaquete(Paquete paquete) throws SaldoInsuficienteException {
 		double costoPaquete = paquete.costo();
 		if ( costoPaquete > this.saldo ){
-			throw new SaldoInsuficienteException();
+			SaldoInsuficienteException e = new SaldoInsuficienteException("Saldo Insuficiente");
+			LOGGER.error("Saldo Insuficiente",e);
+			throw e;	
 		}
 		this.saldo = this.saldo - costoPaquete;
 		this.paquetesComprados.add(paquete);	
